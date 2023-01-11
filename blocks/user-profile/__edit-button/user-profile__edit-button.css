@@ -1,0 +1,9 @@
+.user-profile__edit-button {
+    margin-left: 25px;
+}
+
+@media all and (max-width: 709px) {
+    .user-profile__edit-button {
+        margin-left: 10px;
+    }
+}
