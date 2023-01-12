@@ -1,9 +1,9 @@
 .logo {
     display: block;
+    max-width: 880px;
     width: calc(100% - 54px);
-    margin: 0 auto;
+    margin: 45px auto 41px;
     height: 33px;
-    padding: 45px 0 41px;
     background-image: url(../../images/logo.svg);
     background-repeat: no-repeat;
     background-position: left;
@@ -12,7 +12,7 @@
 
 @media all and (max-width: 709px) {
     .logo {
-        padding: 28px 0 31.6px;
+        margin: 28px auto 31.6px;
         background-size: 103px 24px;
     }
 }
