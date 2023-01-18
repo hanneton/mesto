@@ -1,7 +1,7 @@
 .logo {
+    box-sizing: border-box;
     display: block;
     max-width: 880px;
-    width: calc(100% - 54px);
     height: 33px;
     background-image: url(../../images/logo.svg);
     background-repeat: no-repeat;

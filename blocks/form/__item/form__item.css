@@ -1,10 +1,11 @@
 .form__item {
+    /* font-family: "Inter", "Arial", sans-serif; */
     display: block;
     box-sizing: border-box;
     max-width: 358px;
     width: 100%;
     margin: 0 auto;
-    padding-bottom: 13px;
+    padding: 0 0 9px;
     border-top: 0;
     border-right: 0;
     border-left: 0;
@@ -12,7 +13,7 @@
     outline: 0;
     font-weight: 400;
     font-size: 14px;
-    line-height: 17px;
+    line-height: 16.94px;
 }
 
 .form__item:not(:last-child) {

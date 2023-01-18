@@ -12,7 +12,6 @@
 <body class="page">
     <header class="header">
         <a href="#" class="logo header__logo"></a>
-        <div class="header__line"></div>
     </header>
     <main class="content">
         <section class="user-profile content__user-profile">
@@ -20,69 +19,69 @@
             <div class="user-profile__info">
                 <div class="user-profile__container">
                     <h1 class="user-profile__name">Жак-Ив Кусто</h1>
-                    <button class="edit-button user-profile__edit-button"></button>
+                    <button class="user-profile__edit-button" type="button"></button>
                 </div>
                 <p class="user-profile__occupation">Исследователь океана</p>
             </div>
-            <button class="add-button"></button>
+            <button class="user-profile__add-button" type="button"></button>
         </section>
         <section class="elements content__elements">
             <figure class="element">
                 <img src="./images/karachaevsk.jpg" alt="Храм на фоне гор" class="element__pic">
                 <figcaption class="element__caption">
                     <h2 class="element__name">Карачаево-Черкессия</h2>
-                    <button class="like-button"></button>
+                    <button class="element__like-button" type="button" aria-label="кнопка лайк"></button>
                 </figcaption>
             </figure>
             <figure class="element">
                 <img src="./images/elbrus.jpg" alt="Гора Эльбрус вдали на фоне заката" class="element__pic">
                 <figcaption class="element__caption">
                     <h2 class="element__name">Гора Эльбрус</h2>
-                    <button class="like-button"></button>
+                    <button class="element__like-button" type="button" aria-label="кнопка лайк"></button>
                 </figcaption>
             </figure>
             <figure class="element">
                 <img src="./images/dombay.jpg" alt="Острая вершина горы на Домбае" class="element__pic">
                 <figcaption class="element__caption">
                     <h2 class="element__name">Домбай</h2>
-                    <button class="like-button"></button>
+                    <button class="element__like-button" type="button" aria-label="кнопка лайк"></button>
                 </figcaption>
             </figure>
             <figure class="element">
                 <img src="./images/elbrus.jpg" alt="Гора Эльбрус вдали на фоне заката" class="element__pic">
                 <figcaption class="element__caption">
                     <h2 class="element__name">Гора Эльбрус</h2>
-                    <button class="like-button"></button>
+                    <button class="element__like-button" type="button" aria-label="кнопка лайк"></button>
                 </figcaption>
             </figure>
             <figure class="element">
                 <img src="./images/dombay.jpg" alt="Острая вершина горы на Домбае" class="element__pic">
                 <figcaption class="element__caption">
                     <h2 class="element__name">Домбай</h2>
-                    <button class="like-button"></button>
+                    <button class="element__like-button" type="button" aria-label="кнопка лайк"></button>
                 </figcaption>
             </figure>
             <figure class="element">
                 <img src="./images/karachaevsk.jpg" alt="Храм на фоне гор" class="element__pic">
                 <figcaption class="element__caption">
                     <h2 class="element__name">Карачаево-Черкессия</h2>
-                    <button class="like-button"></button>
+                    <button class="element__like-button" type="button" aria-label="кнопка лайк"></button>
                 </figcaption>
             </figure>
         </section>
-        <section class="popup">
+        <div class="popup">
             <div class="popup__container">
                 <h2 class="popup__heading">Редактировать профиль</h2>
-                <form action="submit" class="form">
-                    <fieldset class="form__input-container">
-                        <input class="form__item form__item_el_name" type="text" minlength="1" maxlength="15">
-                        <input class="form__item form__item_el_occupation" type="text" maxlength="30">
-                    </fieldset>
-                    <button class="save-button">Сохранить</button>
+                <form action="submit" name="form" class="form">
+                    <input class="form__item form__item_el_name" name="name" placeholder="Иван" type="text" required
+                        maxlength="15">
+                    <input class="form__item form__item_el_occupation" name="occupation" placeholder="Сантехник"
+                        type="text" required maxlength="30">
+                    <button class="popup__save-button" type="submit">Сохранить</button>
                 </form>
-                <button class="close-button"></button>
+                <button class="popup__close-button" type="button" aria-label="кнопка закрыть"></button>
             </div>
-        </section>
+        </div>
     </main>
     <footer class="footer">
         <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
