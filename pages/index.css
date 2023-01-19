@@ -40,11 +40,3 @@
 @import url(../blocks/form/__item/_el/form__item_el_occupation.css);
 @import url(../blocks/popup/_opened/popup_opened.css);
 @import url(../blocks/element/__like-button/_active/element__like-button_active.css);
-
-/* * {
-    outline: 1px solid red;
-} */
-
-.some {
-    padding: 0 27px;
-}
