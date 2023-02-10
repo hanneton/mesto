@@ -1,20 +1,32 @@
 let btnEdit = document.querySelector('.user-profile__edit-button');
-let btnClose = document.querySelector('.popup__close-button');
+let btnClose = document.querySelectorAll('.popup__close-button');
+let btnAdd = document.querySelector('.user-profile__add-button');
 let popup = document.querySelector('.popup');
+let popupEdit = document.querySelector('.popup_type_edit');
+let popupAdd = document.querySelector('.popup_type_add');
 let formElement = document.querySelector('.form');
 let userName = document.querySelector('.user-profile__name');
 let userOccupation = document.querySelector('.user-profile__occupation');
-let inputName = popup.querySelector('.form__item_el_name');
-let inputOccupation = popup.querySelector('.form__item_el_occupation');
+let inputName = popupEdit.querySelector('.form__item_el_name');
+let inputOccupation = popupEdit.querySelector('.form__item_el_occupation');
 
-function showPopup() {
-    popup.classList.add('popup_opened');
-    inputName.value = userName.textContent;
-    inputOccupation.value = userOccupation.textContent;
+let elementsContainer = document.querySelector('.elements');
+
+
+function showPopup(e) {
+    e.target === btnEdit ? (
+        popupEdit.classList.add('popup_opened'),
+        inputName.value = userName.textContent,
+        inputOccupation.value = userOccupation.textContent
+    ) : (
+        popupAdd.classList.add('popup_opened')
+    )
 }
 
-function closePopup() {
-    popup.classList.remove('popup_opened');
+function closePopup(e) {
+    let btnCloseOnEdit = btnClose[0];
+    let btnCloseOnAdd = btnClose[1];
+    e.target === btnCloseOnEdit ? popupEdit.classList.remove('popup_opened') : popupAdd.classList.remove('popup_opened');
 }
 
 function saveInfo(e) {
@@ -25,7 +37,10 @@ function saveInfo(e) {
 }
 
 btnEdit.addEventListener('click', showPopup);
-btnClose.addEventListener('click', closePopup);
+btnClose.forEach(item => {
+    item.addEventListener('click', closePopup)
+})
+btnAdd.addEventListener('click', showPopup);
 formElement.addEventListener('submit', saveInfo);
 
 /* 6 cards feature */
@@ -61,7 +76,6 @@ const initialCards = [
 
 
 function addCard(src, name) {
-    let elementsContainer = document.querySelector('.elements');
     let cardTemplate = document.querySelector('#card').content;
     let cardElement = cardTemplate.querySelector('.element').cloneNode(true);
     cardElement.querySelector('.element__name').textContent = name;

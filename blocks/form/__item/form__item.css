@@ -16,6 +16,10 @@
     line-height: 16.94px;
 }
 
+.form__item::placeholder {
+    color: #C4C4C4;
+}
+
 .form__item:not(:last-child) {
     margin-bottom: 30px;
 }
