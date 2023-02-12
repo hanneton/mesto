@@ -1,14 +1,17 @@
 let btnEdit = document.querySelector('.user-profile__edit-button');
-let btnClose = document.querySelectorAll('.popup__close-button');
+let btnsClose = document.querySelectorAll('.popup__close-button');
+let btnsSave = document.querySelectorAll('.popup__save-button');
 let btnAdd = document.querySelector('.user-profile__add-button');
 let popup = document.querySelector('.popup');
 let popupEdit = document.querySelector('.popup_type_edit');
 let popupAdd = document.querySelector('.popup_type_add');
-let formElement = document.querySelector('.form');
+let formElements = document.querySelectorAll('.form');
 let userName = document.querySelector('.user-profile__name');
 let userOccupation = document.querySelector('.user-profile__occupation');
 let inputName = popupEdit.querySelector('.form__item_el_name');
 let inputOccupation = popupEdit.querySelector('.form__item_el_occupation');
+let inputTitle = popupAdd.querySelector('.form__item_el_title');
+let inputSrc = popupAdd.querySelector('.form__item_el_src');
 
 let elementsContainer = document.querySelector('.elements');
 
@@ -24,24 +27,38 @@ function showPopup(e) {
 }
 
 function closePopup(e) {
-    let btnCloseOnEdit = btnClose[0];
-    let btnCloseOnAdd = btnClose[1];
-    e.target === btnCloseOnEdit ? popupEdit.classList.remove('popup_opened') : popupAdd.classList.remove('popup_opened');
+    let btnCloseOnEdit = btnsClose[0];
+    let btnCloseOnAdd = btnsClose[1];
+    let btnSaveOnEdit = btnsSave[0];
+    let btnSaveOnAdd = btnsSave[1];
+    e.target === btnCloseOnEdit || e.target === btnSaveOnEdit ? popupEdit.classList.remove('popup_opened') : popupAdd.classList.remove('popup_opened');
 }
 
 function saveInfo(e) {
     e.preventDefault();
-    userName.innerText = inputName.value;
-    userOccupation.innerText = inputOccupation.value;
+    let formOnEdit = formElements[0];
+    let formOnAdd = formElements[1];
+    e.target === formOnEdit ? (
+        userName.innerText = inputName.value,
+        userOccupation.innerText = inputOccupation.value
+    ) : (
+        console.log(inputSrc.value, inputTitle.value),
+        addCard(inputSrc.value, inputTitle.value)
+    )
     closePopup();
 }
 
 btnEdit.addEventListener('click', showPopup);
-btnClose.forEach(item => {
+btnsClose.forEach(item => {
     item.addEventListener('click', closePopup)
 })
+btnsSave.forEach(item => {
+    item.addEventListener('click', closePopup)
+});
 btnAdd.addEventListener('click', showPopup);
-formElement.addEventListener('submit', saveInfo);
+formElements.forEach(item => {
+    item.addEventListener('submit', saveInfo);
+})
 
 /* 6 cards feature */
 
@@ -80,7 +97,7 @@ function addCard(src, name) {
     let cardElement = cardTemplate.querySelector('.element').cloneNode(true);
     cardElement.querySelector('.element__name').textContent = name;
     cardElement.querySelector('.element__pic').src = src;
-    elementsContainer.append(cardElement);
+    elementsContainer.prepend(cardElement);
 }
 
 initialCards.forEach(el => {
