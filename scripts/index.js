@@ -50,10 +50,13 @@ initialCards.forEach(el => {
 
 
 let likeBtns = elementsContainer.querySelectorAll('.element__like-button');
+let trashBtns = elementsContainer.querySelectorAll('.element__trash-btn');
+
 
 function addCard(src, name) {
     let cardElement = cardTemplate.querySelector('.element').cloneNode(true);
     cardElement.querySelector('.element__like-button').addEventListener('click', toggleLike);
+    cardElement.querySelector('.element__trash-btn').addEventListener('click', deleteCard);
     cardElement.querySelector('.element__name').textContent = name;
     cardElement.querySelector('.element__pic').src = src;
     elementsContainer.prepend(cardElement);
@@ -107,19 +110,17 @@ formElements.forEach(item => {
 likeBtns.forEach(item => {
     item.addEventListener('click', toggleLike);
 })
+trashBtns.forEach(item => {
+    item.addEventListener('click', deleteCard);
+})
 
 
 /* 6 cards feature */
 
-
-
-
-
-
-
-
-
-
 function toggleLike(e) {
     e.target.classList.toggle('element__like-button_active');
+}
+
+function deleteCard(e) {
+    e.target.parentElement.classList.add('element_disactive');
 }
