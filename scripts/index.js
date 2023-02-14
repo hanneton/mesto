@@ -80,8 +80,8 @@ function closePopup(e) {
 
 function saveInfo(e) {
     e.preventDefault();
-    let formOnEdit = formElements[0];
-    let formOnAdd = formElements[1];
+    const formOnEdit = formElements[0];
+    const formOnAdd = formElements[1];
     e.target === formOnEdit ? (
         userName.innerText = inputName.value,
         userOccupation.innerText = inputOccupation.value
