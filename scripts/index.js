@@ -39,25 +39,19 @@ const inputName = popupEdit.querySelector('.form__item_el_name');
 const inputOccupation = popupEdit.querySelector('.form__item_el_occupation');
 const inputTitle = popupAdd.querySelector('.form__item_el_title');
 const inputSrc = popupAdd.querySelector('.form__item_el_src');
-
 const cardTemplate = document.querySelector('#card').content;
 const elementsContainer = document.querySelector('.elements');
+
 initialCards.forEach(el => {
     addCard(el.link, el.name);
 })
 
-
-
-
-
-let likeBtns = elementsContainer.querySelectorAll('.element__like-button');
-let trashBtns = elementsContainer.querySelectorAll('.element__trash-btn');
-let pics = elementsContainer.querySelectorAll('.element__pic');
-
-
+const likeBtns = elementsContainer.querySelectorAll('.element__like-button');
+const trashBtns = elementsContainer.querySelectorAll('.element__trash-btn');
+const pics = elementsContainer.querySelectorAll('.element__pic');
 
 function addCard(src, name) {
-    let cardElement = cardTemplate.querySelector('.element').cloneNode(true);
+    const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
     cardElement.querySelector('.element__like-button').addEventListener('click', toggleLike);
     cardElement.querySelector('.element__pic').addEventListener('click', showPopup);
     cardElement.querySelector('.element__trash-btn').addEventListener('click', deleteCard);
@@ -65,8 +59,6 @@ function addCard(src, name) {
     cardElement.querySelector('.element__pic').src = src;
     elementsContainer.prepend(cardElement);
 }
-
-
 
 function showPopup(e) {
     e.target === btnEdit ? (
@@ -99,6 +91,14 @@ function saveInfo(e) {
     closePopup();
 }
 
+function toggleLike(e) {
+    e.target.classList.toggle('element__like-button_active');
+}
+
+function deleteCard(e) {
+    e.target.parentElement.classList.add('element_disactive');
+}
+
 
 btnEdit.addEventListener('click', showPopup);
 btnsClose.forEach(item => {
@@ -122,12 +122,3 @@ pics.forEach(item => {
 })
 
 
-/* 6 cards feature */
-
-function toggleLike(e) {
-    e.target.classList.toggle('element__like-button_active');
-}
-
-function deleteCard(e) {
-    e.target.parentElement.classList.add('element_disactive');
-}
