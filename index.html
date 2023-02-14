@@ -72,28 +72,37 @@
         <div class="popup popup_type_edit">
             <div class="popup__container">
                 <h2 class="popup__heading">Редактировать профиль</h2>
-                <form action="submit" name="form" class="form">
+                <form action="submit" name="form" class="form" id="form-edit">
                     <input class="form__item form__item_el_name" name="name" placeholder="Иван" type="text" required
                         maxlength="15">
                     <input class="form__item form__item_el_occupation" name="occupation" placeholder="Сантехник"
                         type="text" required maxlength="30">
-                    <button class="popup__save-button" type="submit">Сохранить</button>
                 </form>
+                <button class="popup__save-button" type="submit" form="form-edit">Сохранить</button>
                 <button class="popup__close-button" type="button" aria-label="кнопка закрыть"></button>
             </div>
         </div>
         <div class="popup popup_type_add">
             <div class="popup__container">
                 <h2 class="popup__heading">Новое место</h2>
-                <form action="submit" name="form" class="form">
+                <form action="submit" name="form" class="form" id="form-add">
                     <input class="form__item form__item_el_title" name="title" placeholder="Название" type="text"
                         required maxlength="15">
                     <input class="form__item form__item_el_src" name="src" placeholder="Ссылка на картинку" type="text"
                         required>
-                    <button class="popup__save-button" type="submit">Создать</button>
                 </form>
+                <button class="popup__save-button" type="submit" form="form-add">Создать</button>
                 <button class="popup__close-button" type="button" aria-label="кнопка закрыть"></button>
             </div>
+        </div>
+        <div class="popup popup_type_enlarge">
+            <figure class="popup__element">
+                <img class="popup__pic" src="" alt="">
+                <button class="popup__close-button" type="button" aria-label="кнопка закрыть"></button>
+                <figcaption class="popup__caption">
+                    <p class="popup__text"></p>
+                </figcaption>
+            </figure>
         </div>
     </main>
     <footer class="footer">

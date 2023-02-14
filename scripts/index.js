@@ -31,6 +31,7 @@ const btnAdd = document.querySelector('.user-profile__add-button');
 const popup = document.querySelector('.popup');
 const popupEdit = document.querySelector('.popup_type_edit');
 const popupAdd = document.querySelector('.popup_type_add');
+const popupEnlarge = document.querySelector('.popup_type_enlarge');
 const formElements = document.querySelectorAll('.form');
 const userName = document.querySelector('.user-profile__name');
 const userOccupation = document.querySelector('.user-profile__occupation');
@@ -51,11 +52,14 @@ initialCards.forEach(el => {
 
 let likeBtns = elementsContainer.querySelectorAll('.element__like-button');
 let trashBtns = elementsContainer.querySelectorAll('.element__trash-btn');
+let pics = elementsContainer.querySelectorAll('.element__pic');
+
 
 
 function addCard(src, name) {
     let cardElement = cardTemplate.querySelector('.element').cloneNode(true);
     cardElement.querySelector('.element__like-button').addEventListener('click', toggleLike);
+    cardElement.querySelector('.element__pic').addEventListener('click', showPopup);
     cardElement.querySelector('.element__trash-btn').addEventListener('click', deleteCard);
     cardElement.querySelector('.element__name').textContent = name;
     cardElement.querySelector('.element__pic').src = src;
@@ -69,17 +73,17 @@ function showPopup(e) {
         popupEdit.classList.add('popup_opened'),
         inputName.value = userName.textContent,
         inputOccupation.value = userOccupation.textContent
-    ) : (
+    ) : e.target === btnAdd ? (
         popupAdd.classList.add('popup_opened')
+    ) : (
+        popupEnlarge.querySelector('.popup__text').textContent = e.target.nextElementSibling.firstElementChild.textContent,
+        popupEnlarge.querySelector('.popup__pic').src = e.target.src,
+        popupEnlarge.classList.add('popup_opened')
     )
 }
 
 function closePopup(e) {
-    let btnCloseOnEdit = btnsClose[0];
-    let btnCloseOnAdd = btnsClose[1];
-    let btnSaveOnEdit = btnsSave[0];
-    let btnSaveOnAdd = btnsSave[1];
-    e.target === btnCloseOnEdit || e.target === btnSaveOnEdit ? popupEdit.classList.remove('popup_opened') : popupAdd.classList.remove('popup_opened');
+    e.target.parentElement.parentElement.classList.remove('popup_opened');
 }
 
 function saveInfo(e) {
@@ -112,6 +116,9 @@ likeBtns.forEach(item => {
 })
 trashBtns.forEach(item => {
     item.addEventListener('click', deleteCard);
+})
+pics.forEach(item => {
+    item.addEventListener('click', showPopup);
 })
 
 
