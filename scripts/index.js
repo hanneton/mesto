@@ -88,7 +88,7 @@ function saveInfo(e) {
     ) : (
         addCard(inputSrc.value, inputTitle.value)
     )
-    closePopup();
+    closePopup(e);
 }
 
 function toggleLike(e) {
