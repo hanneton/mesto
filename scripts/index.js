@@ -33,6 +33,8 @@ const popupEdit = document.querySelector('.popup_type_edit');
 const popupAdd = document.querySelector('.popup_type_add');
 const popupEnlarge = document.querySelector('.popup_type_enlarge');
 const formElements = document.querySelectorAll('.form');
+const formEdit = formElements[0];
+const formAdd = formElements[1];
 const userName = document.querySelector('.user-profile__name');
 const userOccupation = document.querySelector('.user-profile__occupation');
 const inputName = popupEdit.querySelector('.form__item_el_name');
@@ -43,52 +45,65 @@ const cardTemplate = document.querySelector('#card').content;
 const elementsContainer = document.querySelector('.elements');
 
 initialCards.forEach(el => {
-    addCard(el.link, el.name);
+    addCard(elementsContainer, createCard(el.link, el.name));
 })
 
 const likeBtns = elementsContainer.querySelectorAll('.element__like-button');
 const trashBtns = elementsContainer.querySelectorAll('.element__trash-btn');
 const pics = elementsContainer.querySelectorAll('.element__pic');
 
-function addCard(src, name) {
-    const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
-    cardElement.querySelector('.element__like-button').addEventListener('click', toggleLike);
-    cardElement.querySelector('.element__pic').addEventListener('click', showPopup);
-    cardElement.querySelector('.element__trash-btn').addEventListener('click', deleteCard);
-    cardElement.querySelector('.element__name').textContent = name;
-    cardElement.querySelector('.element__pic').src = src;
-    elementsContainer.prepend(cardElement);
+function addCard(parent, card) {
+    parent.prepend(card);
 }
 
-function showPopup(e) {
-    e.target === btnEdit ? (
-        popupEdit.classList.add('popup_opened'),
-        inputName.value = userName.textContent,
-        inputOccupation.value = userOccupation.textContent
-    ) : e.target === btnAdd ? (
-        popupAdd.classList.add('popup_opened')
-    ) : (
-        popupEnlarge.querySelector('.popup__text').textContent = e.target.nextElementSibling.firstElementChild.textContent,
-        popupEnlarge.querySelector('.popup__pic').src = e.target.src,
-        popupEnlarge.classList.add('popup_opened')
-    )
+function createCard(src, name) {
+    const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
+    cardElement.querySelector('.element__like-button').addEventListener('click', toggleLike);
+    cardElement.querySelector('.element__pic').addEventListener('click', showEnlargePopup);
+    cardElement.querySelector('.element__trash-btn').addEventListener('click', deleteCard);
+    cardElement.querySelector('.element__name').textContent = name;
+    cardElement.querySelector('.element__pic').alt = name;
+    cardElement.querySelector('.element__pic').src = src;
+    return cardElement;
+}
+
+function showEditPopup() {
+    openPopup(popupEdit);
+    inputName.value = userName.textContent;
+    inputOccupation.value = userOccupation.textContent;
+}
+
+function showAddPopup() {
+    openPopup(popupAdd);
+}
+
+function showEnlargePopup(e) {
+    console.log(e.target, e.currentTarget, e);
+    popupEnlarge.querySelector('.popup__text').textContent = e.target.closest('.element').querySelector('.element__name').textContent;
+    popupEnlarge.querySelector('.popup__pic').src = e.target.src;
+    openPopup(popupEnlarge);
+}
+
+function openPopup(popupElement) {
+    popupElement.classList.add('popup_opened');
 }
 
 function closePopup(e) {
-    e.target.parentElement.parentElement.classList.remove('popup_opened');
+    e.target.closest('.popup').classList.remove('popup_opened');
 }
 
-function saveInfo(e) {
+function saveEditInfo(e) {
     e.preventDefault();
-    const formOnEdit = formElements[0];
-    const formOnAdd = formElements[1];
-    e.target === formOnEdit ? (
-        userName.innerText = inputName.value,
-        userOccupation.innerText = inputOccupation.value
-    ) : (
-        addCard(inputSrc.value, inputTitle.value)
-    )
+    userName.innerText = inputName.value;
+    userOccupation.innerText = inputOccupation.value;
     closePopup(e);
+}
+
+function saveAddInfo(e) {
+    e.preventDefault();
+    addCard(elementsContainer, createCard(inputSrc.value, inputTitle.value));
+    closePopup(e);
+    e.target.reset();
 }
 
 function toggleLike(e) {
@@ -100,25 +115,13 @@ function deleteCard(e) {
 }
 
 
-btnEdit.addEventListener('click', showPopup);
+btnEdit.addEventListener('click', showEditPopup);
+formEdit.addEventListener('submit', saveEditInfo);
+formAdd.addEventListener('submit', saveAddInfo);
 btnsClose.forEach(item => {
     item.addEventListener('click', closePopup)
 })
-btnsSave.forEach(item => {
-    item.addEventListener('click', closePopup)
-});
-btnAdd.addEventListener('click', showPopup);
-formElements.forEach(item => {
-    item.addEventListener('submit', saveInfo);
-})
-likeBtns.forEach(item => {
-    item.addEventListener('click', toggleLike);
-})
-trashBtns.forEach(item => {
-    item.addEventListener('click', deleteCard);
-})
-pics.forEach(item => {
-    item.addEventListener('click', showPopup);
-})
+btnAdd.addEventListener('click', showAddPopup);
+
 
 
