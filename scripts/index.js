@@ -32,9 +32,10 @@ const popup = document.querySelector('.popup');
 const popupEdit = document.querySelector('.popup_type_edit');
 const popupAdd = document.querySelector('.popup_type_add');
 const popupEnlarge = document.querySelector('.popup_type_enlarge');
-const formElements = document.querySelectorAll('.form');
-const formEdit = formElements[0];
-const formAdd = formElements[1];
+const popupEnlargeText = document.querySelector('.popup__text');
+const popupEnlargePic = document.querySelector('.popup__pic');
+const formEdit = document.querySelector('.form_type_edit');
+const formAdd = document.querySelector('.form_type_add');
 const userName = document.querySelector('.user-profile__name');
 const userOccupation = document.querySelector('.user-profile__occupation');
 const inputName = popupEdit.querySelector('.form__item_el_name');
@@ -48,9 +49,6 @@ initialCards.forEach(el => {
     addCard(elementsContainer, createCard(el.link, el.name));
 })
 
-const likeBtns = elementsContainer.querySelectorAll('.element__like-button');
-const trashBtns = elementsContainer.querySelectorAll('.element__trash-btn');
-const pics = elementsContainer.querySelectorAll('.element__pic');
 
 function addCard(parent, card) {
     parent.prepend(card);
@@ -78,8 +76,9 @@ function showAddPopup() {
 }
 
 function showEnlargePopup(e) {
-    popupEnlarge.querySelector('.popup__text').textContent = e.target.closest('.element').querySelector('.element__name').textContent;
-    popupEnlarge.querySelector('.popup__pic').src = e.target.src;
+    popupEnlargeText.textContent = e.target.closest('.element').querySelector('.element__name').textContent;
+    popupEnlargePic.src = e.target.src;
+    popupEnlargePic.alt = e.target.alt;
     openPopup(popupEnlarge);
 }
 
