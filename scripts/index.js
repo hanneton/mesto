@@ -78,7 +78,6 @@ function showAddPopup() {
 }
 
 function showEnlargePopup(e) {
-    console.log(e.target, e.currentTarget, e);
     popupEnlarge.querySelector('.popup__text').textContent = e.target.closest('.element').querySelector('.element__name').textContent;
     popupEnlarge.querySelector('.popup__pic').src = e.target.src;
     openPopup(popupEnlarge);
