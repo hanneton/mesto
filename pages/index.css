@@ -35,6 +35,7 @@
 @import url(../blocks/footer/__copyright/footer__copyright.css);
 @import url(../blocks/form/__input-container/form__input-container.css);
 @import url(../blocks/form/__item/form__item.css);
+@import url(../blocks/form/__input-error/form__input-error.css);
 @import url(../blocks/header/__line/header__line.css);
 @import url(../blocks/header/__logo/header__logo.css);
 @import url(../blocks/user-profile/__edit-button/user-profile__edit-button.css);
