@@ -1,5 +1,4 @@
 .form__item {
-    /* font-family: "Inter", "Arial", sans-serif; */
     display: block;
     box-sizing: border-box;
     max-width: 358px;
@@ -20,9 +19,13 @@
     color: #C4C4C4;
 }
 
-.form__item:not(:last-child) {
-    margin-bottom: 30px;
-}
+/* .form__item:not(:last-child) {
+    margin-bottom: 35px;
+} */
+
+/* .form__item:invalid {
+    margin-bottom: 0;
+} */
 
 @media all and (max-width: 709px) {
     .form__item {
