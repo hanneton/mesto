@@ -12,6 +12,8 @@
     margin: 5px auto 0;
 }
 
-/* .form__input-error:not(:last-of-type) {
-    margin-bottom: 13px;
-} */
+@media all and (max-width: 709px) {
+    .form__input-error {
+        max-width: 238px;
+    }
+}
