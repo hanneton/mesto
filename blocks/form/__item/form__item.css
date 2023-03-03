@@ -19,14 +19,6 @@
     color: #C4C4C4;
 }
 
-/* .form__item:not(:last-child) {
-    margin-bottom: 35px;
-} */
-
-/* .form__item:invalid {
-    margin-bottom: 0;
-} */
-
 @media all and (max-width: 709px) {
     .form__item {
         max-width: 238px;

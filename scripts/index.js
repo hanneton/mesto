@@ -98,14 +98,12 @@ function closePopup(openedPopup) {
 }
 
 function saveEditInfo(e) {
-    e.preventDefault();
     userName.innerText = inputName.value;
     userOccupation.innerText = inputOccupation.value;
     closePopup(e.target.closest('.popup_opened'));
 }
 
 function saveAddInfo(e) {
-    e.preventDefault();
     addCard(elementsContainer, createCard(inputSrc.value, inputTitle.value));
     closePopup(e.target.closest('.popup_opened'));
     e.target.reset();
