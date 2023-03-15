@@ -1,3 +1,8 @@
+import Card from './Card.js';
+import FormValidator from './FormValidation.js';
+
+//================================================================================
+
 const initialCards = [
     {
         name: 'Архыз',
@@ -26,15 +31,14 @@ const initialCards = [
 ];
 const btnEdit = document.querySelector('.user-profile__edit-button');
 const btnAdd = document.querySelector('.user-profile__add-button');
-
 const popups = document.querySelectorAll('.popup');
-
 const popupEdit = document.querySelector('.popup_type_edit');
 const popupAdd = document.querySelector('.popup_type_add');
 const btnAddSave = popupAdd.querySelector('.popup__save-button');
 const popupEnlarge = document.querySelector('.popup_type_enlarge');
 const popupEnlargeText = document.querySelector('.popup__text');
 const popupEnlargePic = document.querySelector('.popup__pic');
+const formList = Array.from(document.forms);
 const formEdit = document.forms['form-edit'];
 const formAdd = document.forms['form-add'];
 const userName = document.querySelector('.user-profile__name');
@@ -43,10 +47,7 @@ const inputName = popupEdit.querySelector('.form__item_el_name');
 const inputOccupation = popupEdit.querySelector('.form__item_el_occupation');
 const inputTitle = popupAdd.querySelector('.form__item_el_title');
 const inputSrc = popupAdd.querySelector('.form__item_el_src');
-const cardTemplate = document.querySelector('#card').content;
 const elementsContainer = document.querySelector('.elements');
-const inputs = document.querySelectorAll('.form__item');
-
 const classesAndSelectors = {
     inputSelector: '.form__item',
     submitButtonSelector: '.popup__save-button',
@@ -55,25 +56,30 @@ const classesAndSelectors = {
     errorClass: 'form__input-error_active',
 };
 
-initialCards.forEach(el => {
-    addCard(elementsContainer, createCard(el.link, el.name));
-})
+//===============================================================================
 
+const renderCards = () => {
+    initialCards.forEach(item => {
+        const card = new Card(item.name, item.link, '#card');
+        const cardElement = card.createCard();
+        addCard(elementsContainer, cardElement);
+    })
+}
+
+renderCards();
+
+formList.forEach(formElement => {
+    formElement.addEventListener('submit', function (evt) {
+        evt.preventDefault();
+    });
+    const validationInstance = new FormValidator(formElement, classesAndSelectors);
+    validationInstance.enableValidation();
+});
+
+//================================================================================
 
 function addCard(parent, card) {
     parent.prepend(card);
-}
-
-function createCard(src, name) {
-    const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
-    const cardPic = cardElement.querySelector('.element__pic');
-    cardElement.querySelector('.element__like-button').addEventListener('click', toggleLike);
-    cardPic.addEventListener('click', () => showEnlargePopup(src, name));
-    cardPic.alt = name;
-    cardPic.src = src;
-    cardElement.querySelector('.element__trash-btn').addEventListener('click', deleteCard);
-    cardElement.querySelector('.element__name').textContent = name;
-    return cardElement;
 }
 
 function showEditPopup() {
@@ -84,13 +90,6 @@ function showEditPopup() {
 
 function showAddPopup() {
     openPopup(popupAdd);
-}
-
-function showEnlargePopup(src, name) {
-    popupEnlargeText.textContent = name;
-    popupEnlargePic.src = src;
-    popupEnlargePic.alt = name;
-    openPopup(popupEnlarge);
 }
 
 function openPopup(popupElement) {
@@ -117,21 +116,15 @@ function saveEditInfo(e) {
 }
 
 function saveAddInfo(e) {
-    addCard(elementsContainer, createCard(inputSrc.value, inputTitle.value));
+    addCard(elementsContainer, new Card(inputTitle.value, inputSrc.value, '#card').createCard());
     closePopup(e.target.closest('.popup_opened'));
     e.target.reset();
 }
 
-function toggleLike(e) {
-    e.target.classList.toggle('element__like-button_active');
-}
-
-function deleteCard(e) {
-    e.target.closest('.element').classList.add('element_disactive');
-}
-
+//================================================================================
 
 btnEdit.addEventListener('click', showEditPopup);
+btnAdd.addEventListener('click', showAddPopup);
 formEdit.addEventListener('submit', saveEditInfo);
 formAdd.addEventListener('submit', saveAddInfo);
 popups.forEach(popup => {
@@ -141,4 +134,15 @@ popups.forEach(popup => {
         }
     })
 })
-btnAdd.addEventListener('click', showAddPopup);
+
+//================================================================================
+
+export {
+    btnAddSave,
+    popupEnlarge,
+    popupEnlargeText,
+    popupEnlargePic,
+    openPopup
+};
+
+
