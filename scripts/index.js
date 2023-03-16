@@ -86,6 +86,7 @@ function addCard(parent, card) {
 }
 
 function showEditPopup() {
+    newCardValidation.resetValidation();
     openPopup(popupEdit);
     inputName.value = userName.textContent;
     inputOccupation.value = userOccupation.textContent;
