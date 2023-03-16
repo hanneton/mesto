@@ -58,27 +58,9 @@ const classesAndSelectors = {
 
 //================================================================================
 
-const renderCards = () => {
-    initialCards.forEach(item => {
-        const card = createCardInstance(item.name, item.link, '#card', showEnlargePopup);
-        const cardElement = card.generateCard();
-        addCard(elementsContainer, cardElement);
-    })
-}
-
-renderCards();
-
-const profileValidation = new FormValidator(formEdit, classesAndSelectors);
-const newCardValidation = new FormValidator(formAdd, classesAndSelectors);
-
-profileValidation.enableValidation();
-newCardValidation.enableValidation();
-
-//====================================================================================================================
-
-
-function createCardInstance(title, link, templateSelector, showEnlargePopup) {
-    return new Card(title, link, templateSelector, showEnlargePopup);
+function createCard(title, link, templateSelector, showEnlargePopup) {
+    const card = new Card(title, link, templateSelector, showEnlargePopup);
+    return card.generateCard();
 }
 
 function addCard(parent, card) {
@@ -128,7 +110,7 @@ function saveEditInfo() {
 }
 
 function saveAddInfo(e) {
-    addCard(elementsContainer, new Card(inputTitle.value, inputSrc.value, '#card', showEnlargePopup).generateCard());
+    addCard(elementsContainer, createCard(inputTitle.value, inputSrc.value, '#card', showEnlargePopup));
     closePopup(popupAdd);
 }
 
@@ -136,8 +118,14 @@ function saveAddInfo(e) {
 
 btnEdit.addEventListener('click', showEditPopup);
 btnAdd.addEventListener('click', showAddPopup);
-formEdit.addEventListener('submit', saveEditInfo);
-formAdd.addEventListener('submit', saveAddInfo);
+formEdit.addEventListener('submit', (e) => {
+    e.preventDefault();
+    saveEditInfo();
+});
+formAdd.addEventListener('submit', (e) => {
+    e.preventDefault();
+    saveAddInfo();
+});
 popups.forEach(popup => {
     popup.addEventListener('mousedown', (e) => {
         if ((e.target === e.currentTarget) || (e.target.classList.contains('popup__close-button'))) {
@@ -148,6 +136,21 @@ popups.forEach(popup => {
 
 //================================================================================
 
+const renderCards = () => {
+    initialCards.forEach(item => {
+        const cardElement = createCard(item.name, item.link, '#card', showEnlargePopup);
+        addCard(elementsContainer, cardElement);
+    })
+}
 
+renderCards();
+
+const profileValidation = new FormValidator(formEdit, classesAndSelectors);
+const newCardValidation = new FormValidator(formAdd, classesAndSelectors);
+
+profileValidation.enableValidation();
+newCardValidation.enableValidation();
+
+//====================================================================================================================
 
 
