@@ -1,18 +1,11 @@
-import {
-    popupEnlarge,
-    popupEnlargeText,
-    popupEnlargePic,
-    openPopup
-} from './index.js';
-
-//======================================================================
-
 export default class Card {
-    constructor(title, src, templateSelector) {
+    constructor(title, src, templateSelector, showEnlargePopup) {
         this._title = title;
         this._src = src;
         this._templateSelector = templateSelector;
+        this._showEnlargePopup = showEnlargePopup;
     }
+
     _getTemplate() {
         const cardElement = document
             .querySelector(this._templateSelector)
@@ -22,33 +15,30 @@ export default class Card {
         return cardElement;
     }
 
-    _setEventListeners(cardLike, cardPic, cardTrash) {
-        cardLike.addEventListener('click', () => { this._toggleLike(cardLike) });
-        cardPic.addEventListener('click', () => { this._showEnlargePopup() });
-        cardTrash.addEventListener('click', () => { this._deleteCard(this._element) });
+    _setEventListeners() {
+        this._cardLike.addEventListener('click', () => { this._toggleLike() });
+        this._cardPic.addEventListener('click', () => { this._showEnlargePopup(this._title, this._src) });
+        this._cardTrash.addEventListener('click', () => { this._deleteCard() });
     }
 
-    createCard() {
+    generateCard() {
         this._element = this._getTemplate();
-        const cardPic = this._element.querySelector('.element__pic');
-        const cardLike = this._element.querySelector('.element__like-button');
-        const cardTrash = this._element.querySelector('.element__trash-btn');
-        this._setEventListeners(cardLike, cardPic, cardTrash);
-        cardPic.alt = this._title;
-        cardPic.src = this._src;
+        this._cardPic = this._element.querySelector('.element__pic');
+        this._cardLike = this._element.querySelector('.element__like-button');
+        this._cardTrash = this._element.querySelector('.element__trash-btn');
+        this._setEventListeners();
+        this._cardPic.alt = this._title;
+        this._cardPic.src = this._src;
         this._element.querySelector('.element__name').textContent = this._title;
         return this._element;
     }
-    _toggleLike(cardLike) {
-        cardLike.classList.toggle('element__like-button_active');
+
+    _toggleLike() {
+        this._cardLike.classList.toggle('element__like-button_active');
     }
-    _showEnlargePopup() {
-        popupEnlargeText.textContent = this._title;
-        popupEnlargePic.src = this._src;
-        popupEnlargePic.alt = this._title;
-        openPopup(popupEnlarge);
-    }
-    _deleteCard(cardElement) {
-        cardElement.classList.add('element_disactive');
+
+    _deleteCard() {
+        this._element.remove();
+        this._element = null;
     }
 }

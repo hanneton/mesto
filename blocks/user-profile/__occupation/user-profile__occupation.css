@@ -13,6 +13,6 @@
     .user-profile__occupation {
         font-size: 14px;
         line-height: 17px;
-        margin-bottom: 36px;
+        margin: 0 auto 36px;
     }
 }

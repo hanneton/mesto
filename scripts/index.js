@@ -56,27 +56,30 @@ const classesAndSelectors = {
     errorClass: 'form__input-error_active',
 };
 
-//===============================================================================
+//================================================================================
 
 const renderCards = () => {
     initialCards.forEach(item => {
-        const card = new Card(item.name, item.link, '#card');
-        const cardElement = card.createCard();
+        const card = createCardInstance(item.name, item.link, '#card', showEnlargePopup);
+        const cardElement = card.generateCard();
         addCard(elementsContainer, cardElement);
     })
 }
 
 renderCards();
 
-formList.forEach(formElement => {
-    formElement.addEventListener('submit', function (evt) {
-        evt.preventDefault();
-    });
-    const validationInstance = new FormValidator(formElement, classesAndSelectors);
-    validationInstance.enableValidation();
-});
+const profileValidation = new FormValidator(formEdit, classesAndSelectors);
+const newCardValidation = new FormValidator(formAdd, classesAndSelectors);
 
-//================================================================================
+profileValidation.enableValidation();
+newCardValidation.enableValidation();
+
+//====================================================================================================================
+
+
+function createCardInstance(title, link, templateSelector, showEnlargePopup) {
+    return new Card(title, link, templateSelector, showEnlargePopup);
+}
 
 function addCard(parent, card) {
     parent.prepend(card);
@@ -89,7 +92,15 @@ function showEditPopup() {
 }
 
 function showAddPopup() {
+    newCardValidation.resetValidation();
     openPopup(popupAdd);
+}
+
+function showEnlargePopup(title, link) {
+    popupEnlargeText.textContent = title;
+    popupEnlargePic.src = link;
+    popupEnlargePic.alt = title;
+    openPopup(popupEnlarge);
 }
 
 function openPopup(popupElement) {
@@ -109,16 +120,15 @@ function closeByEsc(e) {
     }
 }
 
-function saveEditInfo(e) {
-    userName.innerText = inputName.value;
-    userOccupation.innerText = inputOccupation.value;
-    closePopup(e.target.closest('.popup_opened'));
+function saveEditInfo() {
+    userName.textContent = inputName.value;
+    userOccupation.textContent = inputOccupation.value;
+    closePopup(popupEdit);
 }
 
 function saveAddInfo(e) {
-    addCard(elementsContainer, new Card(inputTitle.value, inputSrc.value, '#card').createCard());
-    closePopup(e.target.closest('.popup_opened'));
-    e.target.reset();
+    addCard(elementsContainer, new Card(inputTitle.value, inputSrc.value, '#card', showEnlargePopup).generateCard());
+    closePopup(popupAdd);
 }
 
 //================================================================================
@@ -137,12 +147,6 @@ popups.forEach(popup => {
 
 //================================================================================
 
-export {
-    btnAddSave,
-    popupEnlarge,
-    popupEnlargeText,
-    popupEnlargePic,
-    openPopup
-};
+
 
 
