@@ -1,0 +1,40 @@
+{
+  "name": "mesto",
+  "version": "1.0.0",
+  "description": "В этой проектной работе я применил БЭМ-методологию по организации проекта – **Nested**. Также, наименование всех классов выполнено согласно БЭМ. Повсеместно использовал семантичные теги. \r Помимо этого, пользовался гридами и флексами. Частично использовал абсолютное и фиксированное позиционирование.  Страница сверстана адаптивно и резиново.\r С помощью ванильного js реализованы **поп-ап окна**:\r * изменения имени пользователя и его сферы деятельности\r * добавления пользовательского контента на страницу\r * просмотра фото в крупном размере",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --mode production",
+    "dev": "webpack serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hanneton/mesto.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hanneton/mesto/issues"
+  },
+  "homepage": "https://github.com/hanneton/mesto#readme",
+  "devDependencies": {
+    "@babel/core": "^7.21.4",
+    "@babel/preset-env": "^7.21.4",
+    "autoprefixer": "^10.4.14",
+    "babel-loader": "^9.1.2",
+    "clean-webpack-plugin": "^4.0.0",
+    "css-loader": "^6.7.3",
+    "cssnano": "^6.0.0",
+    "html-webpack-plugin": "^5.5.0",
+    "mini-css-extract-plugin": "^2.7.5",
+    "postcss-loader": "^7.2.4",
+    "webpack": "^5.77.0",
+    "webpack-cli": "^5.0.1",
+    "webpack-dev-server": "^4.13.2"
+  },
+  "dependencies": {
+    "core-js": "^3.30.0"
+  }
+}

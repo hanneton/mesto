@@ -1,5 +1,12 @@
-import Card from './Card.js';
-import FormValidator from './FormValidation.js';
+import '../pages/index.css'
+import Card from '../scripts/Card.js';
+import FormValidator from '../scripts/FormValidation.js';
+import Section from '../scripts/Section.js';
+import PopupWithImage from '../scripts/PopupWithImage.js';
+import PopupWithForm from '../scripts/PopupWithForm.js';
+import UserInfo from '../scripts/UserInfo.js';
+
+
 
 //================================================================================
 
@@ -31,119 +38,98 @@ const initialCards = [
 ];
 const btnEdit = document.querySelector('.user-profile__edit-button');
 const btnAdd = document.querySelector('.user-profile__add-button');
-const popups = document.querySelectorAll('.popup');
 const popupEdit = document.querySelector('.popup_type_edit');
 const popupAdd = document.querySelector('.popup_type_add');
-const btnAddSave = popupAdd.querySelector('.popup__save-button');
-const popupEnlarge = document.querySelector('.popup_type_enlarge');
-const popupEnlargeText = document.querySelector('.popup__text');
-const popupEnlargePic = document.querySelector('.popup__pic');
-const formList = Array.from(document.forms);
 const formEdit = document.forms['form-edit'];
 const formAdd = document.forms['form-add'];
-const userName = document.querySelector('.user-profile__name');
-const userOccupation = document.querySelector('.user-profile__occupation');
 const inputName = popupEdit.querySelector('.form__item_el_name');
 const inputOccupation = popupEdit.querySelector('.form__item_el_occupation');
 const inputTitle = popupAdd.querySelector('.form__item_el_title');
 const inputSrc = popupAdd.querySelector('.form__item_el_src');
-const elementsContainer = document.querySelector('.elements');
 const classesAndSelectors = {
     inputSelector: '.form__item',
     submitButtonSelector: '.popup__save-button',
+    cardsContainerSelector: '.elements',
     inactiveButtonClass: 'popup__save-button_inactive',
     inputErrorClass: 'form__item_type_error',
     errorClass: 'form__input-error_active',
+    editPopupSelector: '.popup_type_edit',
+    addPopupSelector: '.popup_type_add',
+    enlargePopupSelector: '.popup_type_enlarge',
+    userNameSelector: '.user-profile__name',
+    userInfoSelector: '.user-profile__occupation'
 };
 
 //================================================================================
 
+const editPopup = new PopupWithForm(classesAndSelectors.editPopupSelector, saveEditInfo);
+const addPopup = new PopupWithForm(classesAndSelectors.addPopupSelector, saveAddInfo);
+const userInfo = new UserInfo(classesAndSelectors.userNameSelector, classesAndSelectors.userInfoSelector);
+
 function createCard(title, link, templateSelector, showEnlargePopup) {
-    const card = new Card(title, link, templateSelector, showEnlargePopup);
+    const card = new Card({
+        title: title, link: link, templateSelector: templateSelector, showEnlargePopup: showEnlargePopup
+    });
     return card.generateCard();
 }
 
-function addCard(parent, card) {
-    parent.prepend(card);
-}
-
 function showEditPopup() {
-    openPopup(popupEdit);
-    inputName.value = userName.textContent;
-    inputOccupation.value = userOccupation.textContent;
+    editPopup.open();
+    const { userName, userOccupation } = userInfo.getUserInfo();
+    inputName.value = userName;
+    inputOccupation.value = userOccupation;
     profileValidation.resetValidation();
 }
 
 function showAddPopup() {
     newCardValidation.resetValidation();
-    openPopup(popupAdd);
+    addPopup.open();
 }
 
 function showEnlargePopup(title, link) {
-    popupEnlargeText.textContent = title;
-    popupEnlargePic.src = link;
-    popupEnlargePic.alt = title;
-    openPopup(popupEnlarge);
+    const newEnlargePopup = new PopupWithImage(classesAndSelectors.enlargePopupSelector, title, link);
+    newEnlargePopup.setEventListeners();
+    newEnlargePopup.open();
 }
 
-function openPopup(popupElement) {
-    popupElement.classList.add('popup_opened');
-    document.addEventListener('keydown', closeByEsc);
+function saveEditInfo({ firstInputValue, secondInputValue }) {
+    userInfo.setUserInfo(firstInputValue, secondInputValue);
+    editPopup.close();
 }
 
-function closePopup(openedPopup) {
-    openedPopup.classList.remove('popup_opened');
-    document.removeEventListener('keydown', closeByEsc);
-}
-
-function closeByEsc(e) {
-    if (e.key === 'Escape') {
-        const openedPopup = document.querySelector('.popup_opened');
-        closePopup(openedPopup);
-    }
-}
-
-function saveEditInfo() {
-    userName.textContent = inputName.value;
-    userOccupation.textContent = inputOccupation.value;
-    closePopup(popupEdit);
-}
-
-function saveAddInfo(e) {
-    addCard(elementsContainer, createCard(inputTitle.value, inputSrc.value, '#card', showEnlargePopup));
-    closePopup(popupAdd);
+function saveAddInfo() {
+    const newCard = new Section({
+        items: [{
+            name: inputTitle.value,
+            link: inputSrc.value
+        }], renderer: (item) => {
+            const cardElement = createCard(item.name, item.link, '#card', showEnlargePopup);
+            newCard.addItem(cardElement);
+        }
+    }, classesAndSelectors.cardsContainerSelector);
+    newCard.renderItems();
+    addPopup.close();
 }
 
 //================================================================================
 
 btnEdit.addEventListener('click', showEditPopup);
 btnAdd.addEventListener('click', showAddPopup);
-formEdit.addEventListener('submit', (e) => {
-    e.preventDefault();
-    saveEditInfo();
-});
-formAdd.addEventListener('submit', (e) => {
-    e.preventDefault();
-    saveAddInfo();
-});
-popups.forEach(popup => {
-    popup.addEventListener('mousedown', (e) => {
-        if ((e.target === e.currentTarget) || (e.target.classList.contains('popup__close-button'))) {
-            closePopup(popup);
-        }
-    })
-})
+
+editPopup.setEventListeners();
+addPopup.setEventListeners();
 
 //================================================================================
 
-const renderCards = () => {
-    initialCards.forEach(item => {
+const defaultCardList = new Section({
+    items: initialCards, renderer: (item) => {
         const cardElement = createCard(item.name, item.link, '#card', showEnlargePopup);
-        addCard(elementsContainer, cardElement);
-    })
-}
+        defaultCardList.addItem(cardElement);
+    }
+}, classesAndSelectors.cardsContainerSelector);
 
-renderCards();
+defaultCardList.renderItems();
+
 
 const profileValidation = new FormValidator(formEdit, classesAndSelectors);
 const newCardValidation = new FormValidator(formAdd, classesAndSelectors);

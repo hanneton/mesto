@@ -1,7 +1,7 @@
 export default class Card {
-    constructor(title, src, templateSelector, showEnlargePopup) {
+    constructor({ title, link, templateSelector, showEnlargePopup }) {
         this._title = title;
-        this._src = src;
+        this._link = link;
         this._templateSelector = templateSelector;
         this._showEnlargePopup = showEnlargePopup;
     }
@@ -17,7 +17,7 @@ export default class Card {
 
     _setEventListeners() {
         this._cardLike.addEventListener('click', () => { this._toggleLike() });
-        this._cardPic.addEventListener('click', () => { this._showEnlargePopup(this._title, this._src) });
+        this._cardPic.addEventListener('click', () => { this._showEnlargePopup(this._title, this._link) });
         this._cardTrash.addEventListener('click', () => { this._deleteCard() });
     }
 
@@ -28,7 +28,7 @@ export default class Card {
         this._cardTrash = this._element.querySelector('.element__trash-btn');
         this._setEventListeners();
         this._cardPic.alt = this._title;
-        this._cardPic.src = this._src;
+        this._cardPic.src = this._link;
         this._element.querySelector('.element__name').textContent = this._title;
         return this._element;
     }
