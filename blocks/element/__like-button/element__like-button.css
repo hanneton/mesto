@@ -1,6 +1,6 @@
 .element__like-button {
-    flex-shrink: 0;
-    flex-basis: 22px;
+    /* flex-shrink: 0;
+    flex-basis: 22px; */
     height: 19px;
     background-image: url(../../../images/like.svg);
     background-position: center;

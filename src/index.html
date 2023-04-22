@@ -14,7 +14,10 @@
     </header>
     <main class="content">
         <section class="user-profile content__user-profile">
-            <img class="user-profile__avatar" src="<%=require('../images/profile-pic.jpg')%>" alt="аватар пользователя">
+            <a class="user-profile__link" href="#">
+                <img class="user-profile__avatar" src="<%=require('../images/profile-pic.jpg')%>"
+                    alt="аватар пользователя">
+            </a>
             <div class="user-profile__info">
                 <div class="user-profile__container">
                     <h1 class="user-profile__name">Жак-Ив Кусто</h1>
@@ -47,10 +50,10 @@
             <div class="popup__container">
                 <h2 class="popup__heading">Новое место</h2>
                 <form class="form form_type_add" id="form-add" action="submit" name="form-add" novalidate>
-                    <input id="title-input" class="form__item form__item_el_title" name="title" placeholder="Название"
+                    <input id="title-input" class="form__item form__item_el_title" name="name" placeholder="Название"
                         type="text" required minlength="2" maxlength="30">
                     <span class="form__input-error title-input-error"></span>
-                    <input id="src-input" class="form__item form__item_el_src" name="src"
+                    <input id="src-input" class="form__item form__item_el_src" name="link"
                         placeholder="Ссылка на картинку" type="url" required>
                     <span class="form__input-error src-input-error"></span>
                     <button class="popup__save-button" type="submit" form="form-add">Создать</button>
@@ -67,6 +70,26 @@
                 </figcaption>
             </figure>
         </div>
+        <div class="popup popup_type_confirm">
+            <div class="popup__container">
+                <h2 class="popup__heading">Вы уверены</h2>
+                <button class="popup__save-button" type="button">Да</button>
+                <button class="popup__close-button" type="button" aria-label="кнопка закрыть"></button>
+            </div>
+        </div>
+        <div class="popup popup_type_update-avatar">
+            <div class="popup__container">
+                <h2 class="popup__heading">Обновить аватар</h2>
+                <form class="form form_type_update-avatar" id="form-update-avatar" action="submit"
+                    name="form-update-avatar" novalidate>
+                    <input id="src-input" class="form__item form__item_el_src" name="link"
+                        placeholder="Ссылка на картинку" type="url" required>
+                    <span class="form__input-error src-input-error"></span>
+                    <button class="popup__save-button" type="submit" form="form-update-avatar">Сохранить</button>
+                </form>
+                <button class="popup__close-button" type="button" aria-label="кнопка закрыть"></button>
+            </div>
+        </div>
     </main>
     <footer class="footer">
         <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
@@ -76,7 +99,10 @@
             <img src="../images/karachaevsk.jpg" alt="Храм на фоне гор" class="element__pic">
             <figcaption class="element__caption">
                 <h2 class="element__name">Карачаево-Черкессия</h2>
-                <button class="element__like-button" type="button" aria-label="кнопка лайк"></button>
+                <div class="element__like-container">
+                    <button class="element__like-button" type="button" aria-label="кнопка лайк"></button>
+                    <span class="element__like-counter">0</span>
+                </div>
             </figcaption>
             <button class="element__trash-btn"></button>
         </figure>
