@@ -24,7 +24,7 @@ export const initialCards = [
         src: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
     }
 ];
-export const userpic = document.querySelector('.user-profile__avatar');
+export const userPic = document.querySelector('.user-profile__avatar');
 export const btnEdit = document.querySelector('.user-profile__edit-button');
 export const btnAdd = document.querySelector('.user-profile__add-button');
 export const btnUpdateAvatar = document.querySelector('.user-profile__link');
@@ -48,5 +48,5 @@ export const classesAndSelectors = {
     enlargePopupSelector: '.popup_type_enlarge',
     userNameSelector: '.user-profile__name',
     userOccupationSelector: '.user-profile__occupation',
-    userpicSelector: '.user-profile__avatar'
+    userPicSelector: '.user-profile__avatar'
 };

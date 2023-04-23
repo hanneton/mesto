@@ -59,20 +59,21 @@ export default class Card {
         if (this._isLiked) {
             this._api.unlikeCard(this._cardId)
                 .then((data) => {
-                    this._cardLike.classList.remove('element__like-button_active');
+                    this._deleteLike();
                     this._isLiked = !this._isLiked;
                     this._cardLikeCounter.textContent = data.likes.length;
                 })
+                .catch(err => console.log(err));
 
         }
         else {
             this._api.likeCard(this._cardId)
                 .then((data) => {
-                    this._cardLike.classList.add('element__like-button_active');
+                    this._addLike();
                     this._isLiked = !this._isLiked;
                     this._cardLikeCounter.textContent = data.likes.length;
                 })
-
+                .catch(err => console.log(err));
         }
     }
 

@@ -1,4 +1,4 @@
-import '../pages/index.css';
+import './index.css';
 import {
     btnEdit,
     btnAdd,
@@ -10,7 +10,7 @@ import {
     cohort,
     token,
     personalId,
-    userpic
+    userPic
 } from '../scripts/utils/constants.js'
 import Card from '../scripts/components/Card.js';
 import FormValidator from '../scripts/components/FormValidation.js';
@@ -55,8 +55,8 @@ confirmPopup.setEventListeners();
 const userInfo = new UserInfo({
     userNameSelector: classesAndSelectors.userNameSelector,
     userOccupationSelector: classesAndSelectors.userOccupationSelector,
-    userpicSelector: classesAndSelectors.userpicSelector
-}, api);
+    userPicSelector: classesAndSelectors.userPicSelector
+});
 
 //==============================================================================================================
 
@@ -65,16 +65,14 @@ const api = new Api(`https://nomoreparties.co/v1/${cohort}`, {
     "Content-type": "application/json"
 });
 
-api.getInitialInfo()
-    .then(data => {
-        userInfo.setUserInfo(data.name, data.about);
-        userInfo.setInitialUserpic(data.avatar);
-    });
-
-api.getInitialCards()
-    .then(data => {
-        new Section({ items: data, renderer }, classesAndSelectors.cardsContainerSelector).renderItems();
+Promise.all([api.getInitialInfo(), api.getInitialCards()])
+    .then(([info, cards]) => {
+        userInfo.setUserInfo(info);
+        userInfo.setUserPic(info);
+        defaultCardList.items = cards;
+        defaultCardList.renderItems();
     })
+    .catch(err => console.log(err));
 
 //================================================================================
 
@@ -111,6 +109,7 @@ function showAddPopup() {
 }
 
 function showUpdateAvatarPopup() {
+    updateAvatarValidation.resetValidation();
     updateAvatarPopup.open()
 }
 
@@ -125,7 +124,7 @@ function handleConfirmPopup(cardId) {
 function saveEditInfo({ name, occupation }) {
     api.editProfileInfo(name, occupation)
         .then(data => {
-            userInfo.setUserInfo(data.name, data.about);
+            userInfo.setUserInfo(data);
             editPopup.close();
         })
         .catch(err => console.log(err))
@@ -147,9 +146,9 @@ function saveAddInfo({ name, link }) {
 }
 
 function saveUpdateAvatar({ link }) {
-    api.updateUserpic(link)
+    api.updateUserPic(link)
         .then(data => {
-            userpic.src = data.avatar;
+            userInfo.setUserPic(data);
             updateAvatarPopup.close();
         })
         .catch(err => console.log(err))
